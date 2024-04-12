@@ -22,6 +22,6 @@ namespace Catalog.API.Products.GetProducts
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Get Product")
             .WithDescription("Get Product");
-            }
+        }
     }
 }
