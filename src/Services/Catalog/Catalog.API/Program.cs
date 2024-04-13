@@ -1,5 +1,3 @@
-using BuildingBlocks.Behaviors;
-
 var builder = WebApplication.CreateBuilder(args);
 //Add services to the container
 var assembly = typeof(Program).Assembly;
@@ -9,10 +7,11 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblies(assembly);
 
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
 builder.Services.AddValidatorsFromAssembly(assembly);
 
-builder.Services.AddCarter(); 
+builder.Services.AddCarter();
 
 builder.Services.AddMarten(opts =>
 {
@@ -20,9 +19,12 @@ builder.Services.AddMarten(opts =>
 })
 .UseLightweightSessions();
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 //Configure the HTTP request pipeline
 app.MapCarter();
+app.UseExceptionHandler(opts => { });
 
 app.Run();
