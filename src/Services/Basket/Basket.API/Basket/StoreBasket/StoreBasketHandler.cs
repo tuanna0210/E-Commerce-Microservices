@@ -1,7 +1,4 @@
-﻿
-
-
-namespace Basket.API.Basket.StoreBasket
+﻿namespace Basket.API.Basket.StoreBasket
 {
     public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;
     public record StoreBasketResult(string UserName);
@@ -14,7 +11,7 @@ namespace Basket.API.Basket.StoreBasket
             RuleFor(x => x.Cart.Username).NotEmpty().WithMessage("Username is required");
         }
     }
-    public class StoreBasketCommandHandler(IDocumentSession session) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+    public class StoreBasketCommandHandler() : ICommandHandler<StoreBasketCommand, StoreBasketResult>
     {
         public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
         {
