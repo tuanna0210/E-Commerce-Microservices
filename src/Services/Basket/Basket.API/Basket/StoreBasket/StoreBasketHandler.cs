@@ -11,14 +11,15 @@
             RuleFor(x => x.Cart.Username).NotEmpty().WithMessage("Username is required");
         }
     }
-    public class StoreBasketCommandHandler() : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+    public class StoreBasketCommandHandler(IBasketRepository repository) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
     {
         public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
         {
             ShoppingCart cart = command.Cart;
-            //TODO: Store shopping cart
+            await repository.StoreBasket(cart, cancellationToken);
+
             //TODO: Update cache
-            return new StoreBasketResult("abc");
+            return new StoreBasketResult(cart.Username);
         }
     }
 }
