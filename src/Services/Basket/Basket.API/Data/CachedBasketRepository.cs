@@ -28,6 +28,11 @@ namespace Basket.API.Data
         {
             await repository.StoreBasket(basket, cancellationToken);
             await cache.SetStringAsync(basket.Username, JsonSerializer.Serialize<ShoppingCart>(basket), cancellationToken);
+
+            await cache.SetStringAsync(basket.Username, JsonSerializer.Serialize<ShoppingCart>(basket), new DistributedCacheEntryOptions()
+            {
+                
+            })
             return basket;
         }
     }
