@@ -8,7 +8,7 @@
         public string AddressLine { get; } = default!;
         public string Country { get; } = default!;
         public string State { get; } = default!;
-        public string Zipcode { get; } = default!;
+        public string ZipCode { get; } = default!;
 
         protected Address()
         {
@@ -23,7 +23,7 @@
             AddressLine = addressLine;
             Country = country;
             State = state;
-            Zipcode = zipcode;
+            ZipCode = zipcode;
         }
         public static Address Of(string firstName, string lastName, string? emailAddress, string addressLine, string country, string state, string zipcode)
         {
