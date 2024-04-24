@@ -5,7 +5,7 @@
         private readonly List<OrderItem> _orderItems = new();
 
         
-        public IReadOnlyList<OrderItem> OrderItem => _orderItems.AsReadOnly();
+        public IReadOnlyList<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
         public CustomerId CustomerId { get; private set; } = default!;
 
