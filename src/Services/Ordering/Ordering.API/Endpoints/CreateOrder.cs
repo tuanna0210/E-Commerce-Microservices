@@ -4,7 +4,7 @@ namespace Ordering.API.Endpoints
 {
     public record CreateOrderRequest(OrderDto Order);
     public record CreateOrderResponse(Guid Id);
-    public class Create : ICarterModule
+    public class CreateOrder : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
