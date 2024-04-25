@@ -1,26 +1,28 @@
-﻿using Ordering.Application.Orders.Commands.CreateOrder;
+﻿using BuildingBlocks.Pagination;
+using Ordering.Application.Orders.Commands.CreateOrder;
+using Ordering.Application.Orders.Queries.GetOrders;
 
 namespace Ordering.API.Endpoints
 {
-    public record CreateOrderRequest(OrderDto Order);
-    public record CreateOrderResponse(Guid Id);
+    //public record GetOrdersRequest(PaginationRequest PaginationRequest);
+    public record GetOrdersResponse(PaginatedResult<OrderDto> Orders);
     public class GetOrders : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/orders", async (CreateOrderRequest request, ISender sender) =>
+            app.MapGet("/orders", async ([AsParameters] PaginationRequest request, ISender sender) =>
             {
-                var command = request.Adapt<CreateOrderCommand>();
-                var result = await sender.Send(command);
-                var response = result.Adapt<CreateOrderResponse>();
+                var result = await sender.Send(new GetOrdersQuery(request));
 
-                return Results.Created($"/orders/{response.Id}", response);
+                var response = result.Adapt<GetOrdersResponse>();
+
+                return Results.Ok(response);
             })
-            .WithName("CreateOrder")
-            .Produces<CreateOrderResponse>(StatusCodes.Status201Created)
+            .WithName("Get Orders")
+            .Produces<GetOrdersResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
-            .WithSummary("Create Order")
-            .WithDescription("Create Order");
+            .WithSummary("Get Orders")
+            .WithDescription("Get Orders");
         }
     }
 }
