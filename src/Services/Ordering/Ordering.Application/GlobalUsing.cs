@@ -10,3 +10,4 @@ global using MediatR;
 global using Microsoft.Extensions.Logging;
 global using Ordering.Application.Extentions;
 global using Microsoft.EntityFrameworkCore;
+global using BuildingBlocks.Pagination;
