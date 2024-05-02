@@ -1,6 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+//Add services to the container
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
-app.MapGet("/", () => "Hello World!");
+var app = builder.Build();
+//Configure the HTTP request pipeline.
+app.MapReverseProxy();
 
 app.Run();
